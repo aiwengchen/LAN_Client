@@ -70,6 +70,10 @@ BOOL CClientApp::InitInstance()
 	// 例如修改为公司或组织名
 	SetRegistryKey(_T("应用程序向导生成的本地应用程序"));
 
+	//初始化网络资源
+	WSADATA data;
+	int ret = WSAStartup(2,&data);	//初始化套接字
+
 	CClientDlg dlg;
 	m_pMainWnd = &dlg;
 	INT_PTR nResponse = dlg.DoModal();
@@ -100,3 +104,12 @@ BOOL CClientApp::InitInstance()
 	return FALSE;
 }
 
+
+
+int CClientApp::ExitInstance()
+{
+	// TODO: 在此添加专用代码和/或调用基类
+	WSACleanup();
+
+	return CWinApp::ExitInstance();
+}
